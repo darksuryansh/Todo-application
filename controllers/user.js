@@ -6,7 +6,9 @@
 
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const register = async (req,res)=>{
     try {
@@ -84,8 +86,15 @@ export const login = async(req,res)=>{
                 message:"Invalid password"
             })
         }  
+
+        const token = await jwt.sign({ userId: user._id }, process.env.SCRET_KEY, {
+            expiresIn: "3d"
+        });
         
-        res.status(200).json({
+        res.status(200).cookie("token", token, {
+            httpOnly: true,
+            maxAge: 3 * 24 * 60 * 60 * 1000 // 3 days
+        }).json({
             success:true,
             message: `Welcome back ${user.fullname}`
         });
@@ -99,3 +108,18 @@ export const login = async(req,res)=>{
         
     }
 }
+
+
+export const logout = async (req,res)=>{
+    try {
+        return res.status(200).cookie("token","",  { maxAge: 0 }).json({
+            success:true,
+            message:"Logged out successfully"
+        });
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+

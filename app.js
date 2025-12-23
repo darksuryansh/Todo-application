@@ -1,18 +1,28 @@
 import express from "express";  
-// const express = require("express");
-const app = express();
-
-
-
-// const dotenv = require("dotenv");
 import dotenv from "dotenv";
 import connectDB from "./db/Database.js";
+import userRoutes from "./routes/user.js";
+import todoRouters from "./routes/todo.js";
+import bodyParser from "body-parser";
+import cookieParser from 'cookie-parser';
 
 dotenv.config();  
 connectDB();
 
+const app = express();
 
-const PORT = process.env.PORT || 8000;
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use("/api/users", userRoutes);
+app.use("/api/todo", todoRouters);
+
+
+
+
+const PORT = process.env.PORT ;
 
 
 
