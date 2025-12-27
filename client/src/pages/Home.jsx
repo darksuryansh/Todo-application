@@ -18,12 +18,12 @@ const Home = () => {
 
   const addTodoHandler = async () => {
     try {
-      
-      
+
+
       if (editingId) {
 
         // Update existing todo
-        const res = await axios.put(`http://localhost:3000/api/todo/${editingId}`, 
+        const res = await axios.put(`http://localhost:3000/api/todo/${editingId}`,
           { title, description },
           {
             headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ const Home = () => {
 
         if (res.data.success) {
           toast.success(res.data.message);
-          setTodos(todos.map(todo => 
+          setTodos(todos.map(todo =>
             todo._id === editingId ? res.data.todo : todo
           ));
           setTitle("");
@@ -42,7 +42,7 @@ const Home = () => {
         }
       } else {
         // Create new todo
-        const res = await axios.post("http://localhost:3000/api/todo/create", 
+        const res = await axios.post("http://localhost:3000/api/todo/create",
           { title, description },
           {
             headers: { "Content-Type": "application/json" },
@@ -115,15 +115,15 @@ const Home = () => {
 
   return (
 
-    <div>
+    <div className=' min-h-screen bg-black text-white p-5 animate-fadeIn'>
       <Navbar />
       <div className='flex items-center gap-5 mt-5'>
         <Input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          type="text" 
-          placeholder={editingId ? 'Edit todo title...' : 'Add new todo ...'} 
-          className='w-1/4' 
+          type="text"
+          placeholder={editingId ? 'Edit todo title...' : 'Add new todo ...'}
+          className='w-1/4'
         />
         <Button onClick={addTodoHandler}>
           {editingId ? 'Update Todo' : 'Add Todo'}
@@ -146,7 +146,7 @@ const Home = () => {
       <div className='grid grid-cols-3 gap-3 mt-5'>
 
         {todos.map((todo) => (
-          <Card key={todo._id} className='bg-gray-800 text-white'>
+          <Card key={todo._id} className='bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white'>
             <CardContent className='pt-6'>
               <CardHeader className='p-0 pb-4'>
                 <CardTitle>{todo.title}</CardTitle>
@@ -154,19 +154,19 @@ const Home = () => {
                   {todo.description}
                 </CardDescription>
               </CardHeader>
-              
+
               <div className='flex gap-2 mt-4 '>
-                <Button 
-                  onClick={() => editTodoHandler(todo)} 
-                
+                <Button
+                  onClick={() => editTodoHandler(todo)}
+
                   size="sm"
                   className='flex-1'
                 >
                   Edit
                 </Button>
-                <Button 
-                  onClick={() => deleteTodoHandler(todo._id)} 
-              
+                <Button
+                  onClick={() => deleteTodoHandler(todo._id)}
+
                   size="sm"
                   className='flex-1'
                 >

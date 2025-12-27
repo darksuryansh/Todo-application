@@ -21,7 +21,7 @@ const Navbar = ()=>{
   }
 
     return (
-        <div className='bg-gray-800'>
+        <div className='bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'>
             <div className='flex items-center justify-between p-2'>
                 <h1 className='text-white font-bold text-2xl'>TodoApp</h1>
                 <Button onClick={logoutHandler}>Logout</Button>
