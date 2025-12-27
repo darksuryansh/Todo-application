@@ -93,7 +93,8 @@ const Home = () => {
     const fetchTodos = async () => {
       try {
 
-        const res = await axios.get("http://localhost:3000/api/todo/todos");
+        const res = await axios.get("http://localhost:3000/alltodos"); // from redis cache
+        // const res = await axios.get("http://localhost:3000/api/todo/todos");   
 
         if (res.data.success) {
           setTodos(res.data.todos);
