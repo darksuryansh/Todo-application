@@ -15,7 +15,7 @@ export const register = async (req,res)=>{
         const {fullname,email,password} = req.body;
 
         if (!fullname || !email || !password){  // or operstor to check any one field is missing 
-            return res.status(403).json ({
+            return res.status(400).json ({
                 success:false,
                 message:"All fields are required"
             })
@@ -26,7 +26,7 @@ export const register = async (req,res)=>{
         const user= await User.findOne({email});
         
         if(user){
-            return res.status(403).json({
+            return res.status(400).json({
                 success:false,
                 message:"User already exists"
             })
@@ -61,7 +61,7 @@ export const login = async(req,res)=>{
     try {
         const { email, password } = req.body;
         if (!email || !password) {  // or operstor to check any one field is missing 
-            return res.status(403).json({
+            return res.status(400).json({
                 success: false,
                 message: "All fields are required"
             })
@@ -71,7 +71,7 @@ export const login = async(req,res)=>{
         const user= await User.findOne({email});
         
         if(!user){  // if user does not exist 
-            return res.status(403).json({
+            return res.status(400).json({
                 success:false,
                 message:"User does not exist"
             })
@@ -81,7 +81,7 @@ export const login = async(req,res)=>{
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if(!isPasswordValid){
-            return res.status(403).json({
+            return res.status(400 ).json({
                 success:false,
                 message:"Invalid password"
             })

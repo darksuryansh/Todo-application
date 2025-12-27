@@ -7,7 +7,7 @@ export const createTodo= async (req , res)=>{
         const {title,description}=req.body;
 
         if(!title || !description){
-            res.status(403).json({
+            res.status(400).json({
                 success:false,
                 message:"All fields are required"
             });
